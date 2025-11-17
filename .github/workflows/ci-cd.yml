@@ -69,36 +69,48 @@ jobs:
           name: dist
           path: dist/
           retention-days: 7
+      
+      - name: Build Summary
+        run: |
+          echo "✅ Build completed successfully!"
+          echo "📦 Artifacts uploaded to GitHub Actions"
+          echo ""
+          echo "To enable Vercel deployment, add these secrets to your repository:"
+          echo "- VERCEL_TOKEN"
+          echo "- VERCEL_ORG_ID"
+          echo "- VERCEL_PROJECT_ID"
 
   # Deploy to Vercel (Production)
-  deploy-production:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
+  # Uncomment and configure secrets to enable deployment
+  # deploy-production:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+  #   
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     
+  #     - name: Deploy to Vercel
+  #       uses: amondnet/vercel-action@v20
+  #       with:
+  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
+  #         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+  #         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+  #         vercel-args: '--prod'
 
   # Deploy to Vercel (Preview)
-  deploy-preview:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+  # Uncomment and configure secrets to enable deployment
+  # deploy-preview:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   if: github.ref != 'refs/heads/master' && github.event_name == 'push'
+  #   
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     
+  #     - name: Deploy to Vercel
+  #       uses: amondnet/vercel-action@v20
+  #       with:
+  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
+  #         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+  #         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
